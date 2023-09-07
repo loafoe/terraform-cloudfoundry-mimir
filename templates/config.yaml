@@ -42,3 +42,7 @@ server:
 store_gateway:
   sharding_ring:
     replication_factor: 1
+
+limits:
+  ingestion_rate: 100000
+  max_global_series_per_user: 15000000
