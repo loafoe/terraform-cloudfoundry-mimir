@@ -8,6 +8,7 @@ on:
 
 jobs:
   main:
+    permissions: write-all
     runs-on: ubuntu-latest
     strategy:
       matrix:
