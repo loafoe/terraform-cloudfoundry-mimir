@@ -40,7 +40,7 @@ variable "docker_password" {
 variable "mimir_image" {
   type        = string
   description = "Mimir server image to use"
-  default     = "grafana/mimir:2.9.0"
+  default     = "ghcr.io/loafoe/mimir:v0.0.2-alpine-cf"
 }
 
 variable "s3_credentials" {
