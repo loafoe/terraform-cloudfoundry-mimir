@@ -1,4 +1,4 @@
-output "dex_endpoint" {
-  description = "The Caddy proxy endpoint"
-  value       = cloudfoundry_route.dex.endpoint
+output "mimir_endpoint" {
+  description = "The Mimir endpoint"
+  value       = cloudfoundry_route.mimir.endpoint
 }

@@ -15,14 +15,14 @@ variable "name_postfix" {
 
 variable "memory" {
   type        = number
-  description = "The amount of RAM to allocate for Caddy (MB)"
-  default     = 1024
+  description = "The amount of RAM to allocate for Grafana Mimir (MB)"
+  default     = 2048
 }
 
 variable "disk" {
   type        = number
-  description = "The amount of Disk space to allocate for Grafana Loki (MB)"
-  default     = 4096
+  description = "The amount of Disk space to allocate for Grafana Mimir (MB)"
+  default     = 10240
 }
 
 variable "docker_username" {
@@ -37,14 +37,8 @@ variable "docker_password" {
   default     = ""
 }
 
-variable "dex_image" {
+variable "mimir_image" {
   type        = string
-  description = "Caddy server image to use"
-  default     = "ghcr.io/philips-forks/dex:v2.37.0-hsdp.3-alpine-cf"
-}
-
-variable "issuer" {
-  type        = string
-  description = "Issuer"
-  default     = ""
+  description = "Mimir server image to use"
+  default     = "grafana/mimir:2.9.0"
 }

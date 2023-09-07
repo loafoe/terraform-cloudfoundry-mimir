@@ -1,36 +1,31 @@
-locals {
-  issuer = var.issuer != "" ? var.issuer : "https://${cloudfoundry_route.dex.endpoint}"
-}
-
-resource "cloudfoundry_app" "dex" {
-  name         = "tf-dex-${var.name_postfix}"
+resource "cloudfoundry_app" "mimir" {
+  name         = "tf-mimir-${var.name_postfix}"
   space        = var.cf_space_id
-  memory       = 1024
-  disk_quota   = 4096
-  docker_image = var.dex_image
+  memory       = var.memory
+  disk_quota   = var.disk
+  docker_image = var.mimir_image
   docker_credentials = {
     username = var.docker_username
     password = var.docker_password
   }
 
   environment = merge({
-    DEXCONFIG_BASE64 = base64encode(templatefile("${path.module}/templates/config.yaml", {
-      issuer = local.issuer
+    MIMIRCONFIG_BASE64 = base64encode(templatefile("${path.module}/templates/config.yaml", {
     }))
   }, {})
 
-  command           = "mkdir -p /etc/dex && echo $DEXCONFIG_BASE64 | base64 -d > /etc/dex/config.yaml && dex serve /etc/dex/config.yaml"
+  command           = "mkdir -p /etc/mimir && echo $MIMIRCONFIG_BASE64 | base64 -d > /etc/mimir/config.yaml && mimir -config.file=/etc/mimir/config.yaml"
   health_check_type = "process"
   strategy          = "rolling"
 
   //noinspection HCLUnknownBlockType
   routes {
-    route = cloudfoundry_route.dex.id
+    route = cloudfoundry_route.mimir.id
   }
 }
 
-resource "cloudfoundry_route" "dex" {
+resource "cloudfoundry_route" "mimir" {
   domain   = data.cloudfoundry_domain.domain.id
   space    = var.cf_space_id
-  hostname = "tf-dex-${var.name_postfix}"
+  hostname = "tf-mimir-${var.name_postfix}"
 }
