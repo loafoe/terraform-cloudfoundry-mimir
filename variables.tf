@@ -42,3 +42,18 @@ variable "mimir_image" {
   description = "Mimir server image to use"
   default     = "grafana/mimir:2.9.0"
 }
+
+variable "s3_credentials" {
+  type = object({
+    access_key = string
+    secret_key = string
+    endpoint   = string
+    bucket     = string
+  })
+  default = {
+    access_key = ""
+    secret_key = ""
+    endpoint   = ""
+    bucket     = ""
+  }
+}
