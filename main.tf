@@ -11,6 +11,10 @@ resource "cloudfoundry_app" "mimir" {
 
   environment = merge({
     MIMIRCONFIG_BASE64 = base64encode(templatefile("${path.module}/templates/config.yaml", {
+      s3_endpoint          = var.s3_credentials.endpoint
+      s3_bucket            = var.s3_credentials.bucket
+      s3_secret_access_key = var.s3_credentials.secret_key
+      s3_access_key_id     = var.s3_credentials.access_key
     }))
   }, {})
 
