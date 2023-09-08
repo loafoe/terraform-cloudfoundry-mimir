@@ -6,15 +6,14 @@ common:
   storage:
     backend: s3
     s3:
-      endpoint: ${s3_endpoint}
-      bucket_name: ${s3_bucket}
-      secret_access_key: ${s3_secret_access_key}
-      access_key_id: ${s3_access_key_id}
+      endpoint: "${s3_endpoint}"
+      bucket_name: "${s3_bucket}"
+      secret_access_key: "${s3_secret_access_key}"
+      access_key_id: "${s3_access_key_id}"
 
 blocks_storage:
+  storage_prefix: blocks
   backend: s3
-  s3:
-    storage_prefix: mimir-blocks
   bucket_store:
     sync_dir: /tmp/mimir/tsdb-sync
   tsdb:
