@@ -1,4 +1,4 @@
-output "mimir_endpoint" {
+output "mimir_proxy_endpoint" {
   description = "The Mimir endpoint"
-  value       = cloudfoundry_route.mimir.endpoint
+  value       = module.proxy.proxy_endpoint
 }

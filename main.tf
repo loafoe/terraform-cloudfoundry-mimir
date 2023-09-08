@@ -1,5 +1,21 @@
+locals {
+  postfix = var.name_postfix
+}
+
+module "proxy" {
+  source = "./modules/proxy"
+
+
+  mimir_app_id            = cloudfoundry_app.mimir.id
+  mimir_internal_endpoint = cloudfoundry_route.mimir_internal.endpoint
+  name_postfix            = local.postfix
+  cf_domain               = var.cf_domain
+  cf_space_id             = var.cf_space_id
+}
+
+
 resource "cloudfoundry_app" "mimir" {
-  name         = "tf-mimir-${var.name_postfix}"
+  name         = "tf-mimir-${local.postfix}"
   space        = var.cf_space_id
   memory       = var.memory
   disk_quota   = var.disk
@@ -24,12 +40,12 @@ resource "cloudfoundry_app" "mimir" {
 
   //noinspection HCLUnknownBlockType
   routes {
-    route = cloudfoundry_route.mimir.id
+    route = cloudfoundry_route.mimir_internal.id
   }
 }
 
-resource "cloudfoundry_route" "mimir" {
-  domain   = data.cloudfoundry_domain.domain.id
+resource "cloudfoundry_route" "mimir_internal" {
+  domain   = data.cloudfoundry_domain.internal.id
   space    = var.cf_space_id
-  hostname = "tf-mimir-${var.name_postfix}"
+  hostname = "tf-mimir-${local.postfix}"
 }
