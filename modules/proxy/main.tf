@@ -26,7 +26,7 @@ resource "cloudfoundry_app" "proxy" {
 
   environment = merge({
     CADDYFILE_BASE64 = base64encode(templatefile("${path.module}/templates/Caddyfile", {
-      upstream_url = "http://${var.mimir_internal_endpoint}:3100"
+      upstream_url = "http://${var.mimir_internal_endpoint}:8080"
       username     = "mimir"
       password     = base64encode(htpasswd_password.hash.bcrypt)
     }))
