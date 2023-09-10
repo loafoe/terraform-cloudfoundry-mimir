@@ -16,8 +16,11 @@ blocks_storage:
   backend: s3
 
 compactor:
-  data_dir: /tmp/mimir/compactor
+  compaction_interval: 30m
+  max_closing_blocks_concurrency: 2
+  max_opening_blocks_concurrency: 4
   sharding_ring:
+    wait_stability_min_duration: 1m
     kvstore:
       store: memberlist
 
@@ -50,3 +53,5 @@ store_gateway:
 limits:
   ingestion_rate: 100000
   max_global_series_per_user: 15000000
+  max_cache_freshness: 10m
+  max_total_query_length: 12000h
