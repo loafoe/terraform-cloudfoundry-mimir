@@ -16,13 +16,13 @@ variable "name_postfix" {
 variable "memory" {
   type        = number
   description = "The amount of RAM to allocate for Grafana Mimir (MB)"
-  default     = 2048
+  default     = 6144
 }
 
 variable "disk" {
   type        = number
   description = "The amount of Disk space to allocate for Grafana Mimir (MB)"
-  default     = 10240
+  default     = 20480
 }
 
 variable "docker_username" {
